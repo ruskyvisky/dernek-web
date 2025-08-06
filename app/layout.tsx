@@ -10,8 +10,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <title>Edirne Çocuk Hakları Derneği</title>
+        <meta name="description" content="Edirne Çocuk Hakları Derneği Resmi Web Sitesi" />
+      </head>
       <body>
         <Header />
+        
         {children}
       </body>
     </html>

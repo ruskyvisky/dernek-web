@@ -8,40 +8,8 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 shadow-xl sticky top-0 z-50">
-      {/* Üst Banner */}
-      <div className="bg-white/95 backdrop-blur-sm border-b border-pink-200">
-        <div className="container mx-auto px-4 py-2">
-          <div className="flex items-center justify-between text-sm">
-            {/* Sol: Slogan */}
-            <div className="flex items-center gap-2 text-purple-600 font-medium">
-              <FaHeart className="text-pink-500 animate-pulse" />
-              <span className="hidden sm:block">Her Çocuğun Hakkı Var</span>
-            </div>
-            
-            {/* Sağ: Sosyal medya */}
-            <div className="flex items-center gap-3">
-              <span className="text-gray-600 text-xs hidden md:block">Bizi Takip Edin:</span>
-              <div className="flex gap-2">
-                <a 
-                  href="https://instagram.com" 
-                  target="_blank" 
-                  className="text-pink-500 hover:text-pink-600 hover:scale-110 transition-all duration-300 p-2 rounded-full hover:bg-pink-50"
-                >
-                  <FaInstagram size={16} />
-                </a>
-                <a 
-                  href="https://facebook.com" 
-                  target="_blank" 
-                  className="text-blue-500 hover:text-blue-600 hover:scale-110 transition-all duration-300 p-2 rounded-full hover:bg-blue-50"
-                >
-                  <FaFacebookF size={16} />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <header className="bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 shadow-xl relative top-0 z-50">
+      
 
       {/* Ana Header */}
       <div className="container mx-auto px-4 py-4">
@@ -141,16 +109,16 @@ const Header = () => {
             </div>
 
             <Link 
-              href="/destek" 
+              href="/uye-ol" 
               className="text-white hover:text-yellow-200 transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-white/10 backdrop-blur-sm"
             >
-              Destek
+              Üye Ol
             </Link>
             
             {/* Özel Bağış Butonu */}
             <Link 
               href="/bagis-yap" 
-              className="bg-yellow-400 hover:bg-yellow-300 text-purple-800 font-bold px-6 py-2 rounded-full transition-all duration-300 hover:scale-105 shadow-lg flex items-center gap-2 animate-pulse"
+              className="bg-yellow-400 hover:bg-yellow-300 text-purple-800 font-bold px-6 py-2 rounded-full transition-all duration-300 hover:scale-105 shadow-lg flex items-center gap-2"
             >
               <FaHeart className="text-red-500" />
               Bağış Yap
