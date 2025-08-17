@@ -21,7 +21,7 @@ export default function BagisYapPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-pink-50">
+    <div className="min-h-screen ">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Başlık */}
@@ -79,7 +79,7 @@ export default function BagisYapPage() {
                         </span>
                         <button
                           onClick={handleCopy}
-                          className="px-3 py-1 text-white text-sm rounded-lg hover:bg-blue-700 transition"
+                          className="px-3 py-1 text-white text-sm rounded-lg hover:bg-gray-200 transition"
                         >
                           <IoCopy size={24} color="black"/>
                         </button>

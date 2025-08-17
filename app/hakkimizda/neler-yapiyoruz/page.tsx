@@ -96,30 +96,7 @@ export default function NelerYapiyoruzPage() {
             </div>
           </div>
 
-          {/* İstatistikler */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 mb-16">
-            <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-              2024 Yılı Başarılarımız
-            </h2>
-            <div className="grid md:grid-cols-4 gap-8">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-purple-600 mb-2">250+</div>
-                <div className="text-gray-600">Desteklenen Çocuk</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-blue-600 mb-2">45</div>
-                <div className="text-gray-600">Düzenlenen Etkinlik</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-green-600 mb-2">15</div>
-                <div className="text-gray-600">Partner Kuruluş</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-pink-600 mb-2">500+</div>
-                <div className="text-gray-600">Gönüllü Üye</div>
-              </div>
-            </div>
-          </div>
+          
 
           {/* Nasıl Yardım Edebilirsiniz */}
           <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl shadow-xl p-8 text-white text-center">
@@ -131,12 +108,13 @@ export default function NelerYapiyoruzPage() {
               Gönüllü olarak katılabilir veya bağış yapabilirsiniz.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-purple-600 font-bold px-8 py-3 rounded-full hover:bg-gray-100 transition-all">
-                Gönüllü Ol
-              </button>
-              <button className="bg-yellow-400 text-purple-800 font-bold px-8 py-3 rounded-full hover:bg-yellow-300 transition-all">
+              <a href='/uye-ol' className="bg-white text-purple-600 font-bold px-8 py-3 rounded-full hover:bg-gray-100 transition-all">
+                Üye Ol
+              </a>
+              
+              <a href='/bagis-yap' className="bg-yellow-400 text-purple-800 font-bold px-8 py-3 rounded-full hover:bg-yellow-300 transition-all">
                 Bağış Yap
-              </button>
+              </a>
             </div>
           </div>
         </div>
