@@ -1,10 +1,88 @@
-import type { Metadata } from 'next';
-export const metadata: Metadata = {
-  title: 'İletişim | Edirne Çocuk Hakları Derneği',
-  description: 'Bizimle iletişime geçin. Adres, telefon, e-posta bilgileri ve iletişim formu.',
-};
+'use client';
+
+import { useState } from 'react';
+import emailjs from '@emailjs/browser';
+import { emailConfig } from '@/lib/email-config';
 
 export default function IletisimPage() {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: ''
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setStatusMessage('');
+
+    // Form validation
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.subject || !formData.message) {
+      setStatusMessage('Lütfen zorunlu alanları doldurun!');
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      // EmailJS template parameters
+      const templateParams = {
+        from_name: `${formData.firstName} ${formData.lastName}`,
+        from_email: formData.email,
+        phone: formData.phone || 'Belirtilmemiş',
+        subject: formData.subject,
+        message: formData.message,
+        reply_to: formData.email // Yanıt için gönderenin emaili
+      };
+
+      // EmailJS service call - to_email parametresini kaldırdık
+      await emailjs.send(
+        emailConfig.serviceId,
+        emailConfig.templateId, 
+        templateParams,
+        emailConfig.publicKey
+      );
+
+      setStatusMessage('Mesajınız başarıyla gönderildi! En kısa sürede dönüş yapacağız.');
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: ''
+      });
+    } catch (error: any) {
+      console.error('Email gönderme hatası:', error);
+      
+      // Daha detaylı hata mesajı
+      let errorMessage = 'Mesaj gönderilirken bir hata oluştu.';
+      
+      if (error.status === 422) {
+        errorMessage = 'E-posta ayarlarında bir sorun var. Lütfen daha sonra tekrar deneyin.';
+      } else if (error.status === 400) {
+        errorMessage = 'Form verilerinde bir hata var. Lütfen tüm alanları kontrol edin.';
+      } else if (error.status === 401) {
+        errorMessage = 'E-posta servisi yetkilendirme hatası.';
+      }
+      
+      setStatusMessage(errorMessage);
+    }
+
+    setIsLoading(false);
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       <div className="container mx-auto px-4 py-8">
@@ -147,7 +225,14 @@ export default function IletisimPage() {
                 Bize Yazın
               </h2>
 
-              <form className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Status Message */}
+                {statusMessage && (
+                  <div className={`p-4 rounded-lg ${statusMessage.includes('başarıyla') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                    {statusMessage}
+                  </div>
+                )}
+
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-gray-700 font-medium mb-2">
@@ -155,6 +240,10 @@ export default function IletisimPage() {
                     </label>
                     <input
                       type="text"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder="Adınız"
                     />
@@ -165,6 +254,10 @@ export default function IletisimPage() {
                     </label>
                     <input
                       type="text"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder="Soyadınız"
                     />
@@ -177,6 +270,10 @@ export default function IletisimPage() {
                   </label>
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="email@örnek.com"
                   />
@@ -188,6 +285,9 @@ export default function IletisimPage() {
                   </label>
                   <input
                     type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="0555 123 45 67"
                   />
@@ -197,7 +297,13 @@ export default function IletisimPage() {
                   <label className="block text-gray-700 font-medium mb-2">
                     Konu *
                   </label>
-                  <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  <select 
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
                     <option value="">Konu seçiniz</option>
                     <option value="uyelik">Üyelik</option>
                     <option value="bagis">Bağış</option>
@@ -215,6 +321,10 @@ export default function IletisimPage() {
                     Mesajınız *
                   </label>
                   <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    required
                     rows={6}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="Mesajınızı buraya yazın..."
@@ -224,6 +334,7 @@ export default function IletisimPage() {
                 <div className="flex items-start gap-3">
                   <input
                     type="checkbox"
+                    required
                     className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                   />
                   <label className="text-gray-600 text-sm">
@@ -233,9 +344,14 @@ export default function IletisimPage() {
 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold py-4 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105"
+                  disabled={isLoading}
+                  className={`w-full font-bold py-4 rounded-lg transition-all duration-300 transform hover:scale-105 ${
+                    isLoading 
+                      ? 'bg-gray-400 cursor-not-allowed' 
+                      : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600'
+                  }`}
                 >
-                  Mesajı Gönder
+                  {isLoading ? 'Gönderiliyor...' : 'Mesajı Gönder'}
                 </button>
               </form>
 
