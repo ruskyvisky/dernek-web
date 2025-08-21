@@ -5,7 +5,18 @@ export const metadata: Metadata = {
   description: 'Basında çıkan haberlerimiz ve medya yansımalarımız.',
 };
 
-export default function BasindaBizPage() {
+async function getPosts() {
+  const res = await fetch(
+    'https://wp.echd.org.tr/wp-json/wp/v2/posts?categories=5&_embed',
+
+  );
+  if (!res.ok) throw new Error('Veri alınamadı');
+  return res.json();
+}
+
+export default async function BasindaBizPage() {
+  const posts = await getPosts();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       <div className="container mx-auto px-4 py-8">
@@ -23,83 +34,44 @@ export default function BasindaBizPage() {
 
           {/* Haber Kartları */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Örnek Haber 1 */}
-            <div className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
-              <div className="h-48 bg-gradient-to-br from-pink-400 to-purple-400"></div>
-              <div className="p-6">
-                <span className="text-sm text-purple-600 font-medium">20 Kasım 2024</span>
-                <h3 className="text-xl font-bold text-gray-800 mt-2 mb-3">
-                  Dünya Çocuk Hakları Günü Etkinliği
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Derneğimiz tarafından düzenlenen etkinlik büyük ilgi gördü...
-                </p>
-              </div>
-            </div>
-
-            {/* Örnek Haber 2 */}
-            <div className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
-              <div className="h-48 bg-gradient-to-br from-blue-400 to-purple-400"></div>
-              <div className="p-6">
-                <span className="text-sm text-purple-600 font-medium">15 Ekim 2024</span>
-                <h3 className="text-xl font-bold text-gray-800 mt-2 mb-3">
-                  Eğitim Desteği Projesi Başladı
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Muhtaç çocuklara eğitim desteği sağlayan projemiz hayata geçti...
-                </p>
-              </div>
-            </div>
-
-            {/* Örnek Haber 3 */}
-            <div className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
-              <div className="h-48 bg-gradient-to-br from-pink-400 to-blue-400"></div>
-              <div className="p-6">
-                <span className="text-sm text-purple-600 font-medium">5 Eylül 2024</span>
-                <h3 className="text-xl font-bold text-gray-800 mt-2 mb-3">
-                  Okul Öncesi Eğitim Semineri
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Veliler için düzenlenen seminer büyük katılım sağladı...
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Medya İletişim */}
-          <div className="mt-16 bg-white rounded-2xl shadow-xl p-8">
-            <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-              Medya İletişim
-            </h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Basın İletişim</h3>
-                <p className="text-gray-600 mb-4">
-                  Basın açıklamaları ve medya işbirlikleri için bizimle iletişime geçin.
-                </p>
-                <p className="text-purple-600 font-medium">
-                  📧 basin@edirnecochakhakları.org<br/>
-                  📞 +90 284 XXX XX XX
-                </p>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Sosyal Medya</h3>
-                <p className="text-gray-600 mb-4">
-                  Güncel haberlerimizi sosyal medya hesaplarımızdan takip edebilirsiniz.
-                </p>
-                <div className="flex gap-4">
-                  <a href="#" className="text-purple-600 hover:text-purple-800 transition-colors">
-                    Instagram
-                  </a>
-                  <a href="#" className="text-purple-600 hover:text-purple-800 transition-colors">
-                    Facebook
-                  </a>
-                  <a href="#" className="text-purple-600 hover:text-purple-800 transition-colors">
-                    Twitter
-                  </a>
-                </div>
-              </div>
-            </div>
+            {posts.map((post: any) => {
+              const featured =
+                post._embedded?.['wp:featuredmedia']?.[0]?.source_url ?? null;
+              const link = post.meta?._links_to || post.link; // Page Links To eklentisi varsa
+              return (
+                <a
+                  key={post.id}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 block"
+                >
+                  {featured ? (
+                    <div className="h-48 w-full">
+                      <img
+                        src={featured}
+                        alt={post.title.rendered}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="h-48 bg-gradient-to-br from-blue-400 to-purple-400"></div>
+                  )}
+                  <div className="p-6">
+                    <span className="text-sm text-purple-600 font-medium">
+                      {new Date(post.date).toLocaleDateString('tr-TR', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric',
+                      })}
+                    </span>
+                    <h3 className="text-xl font-bold text-gray-800 mt-2 mb-3">
+                      {post.title.rendered}
+                    </h3>
+                  </div>
+                </a>
+              );
+            })}
           </div>
         </div>
       </div>
