@@ -74,51 +74,9 @@ export default function UyeOlPage() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-red-400 rounded-full flex items-center justify-center text-white text-xl flex-shrink-0">
-                    💼
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">
-                      Kariyer Gelişimi
-                    </h3>
-                    <p className="text-gray-600">
-                      STK deneyimi, sertifika programları ve 
-                      profesyonel ağ geliştirme imkanları.
-                    </p>
-                  </div>
-                </div>
               </div>
 
-              {/* Üyelik Türleri */}
-              <div className="mt-12">
-                <h3 className="text-2xl font-bold text-gray-800 mb-6">
-                  Üyelik Türleri
-                </h3>
-                <div className="space-y-4">
-                  <div className="bg-white rounded-xl p-6 shadow-lg">
-                    <h4 className="text-lg font-bold text-purple-600 mb-2">
-                      Aktif Üyelik
-                    </h4>
-                    <p className="text-gray-600 mb-3">
-                      Tüm hakları kullanabilir, yönetimde görev alabilir.
-                    </p>
-                    <span className="text-purple-800 font-bold">100 TL/Yıl</span>
-                  </div>
-                  
-                  <div className="bg-white rounded-xl p-6 shadow-lg">
-                    <h4 className="text-lg font-bold text-blue-600 mb-2">
-                      Destek Üyeliği
-                    </h4>
-                    <p className="text-gray-600 mb-3">
-                      Etkinliklere katılabilir, bağış yapabilir.
-                    </p>
-                    <span className="text-blue-800 font-bold">50 TL/Yıl</span>
-                  </div>
-                </div>
-              </div>
             </div>
-
             {/* Sağ: Üyelik Formu */}
             <div className="bg-white rounded-2xl shadow-xl p-8">
               <h2 className="text-2xl font-bold text-gray-800 mb-6">
@@ -192,16 +150,6 @@ export default function UyeOlPage() {
                   ></textarea>
                 </div>
 
-                <div>
-                  <label className="block text-gray-700 font-medium mb-2">
-                    Üyelik Türü *
-                  </label>
-                  <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                    <option value="">Seçiniz</option>
-                    <option value="aktif">Aktif Üyelik (100 TL/Yıl)</option>
-                    <option value="destek">Destek Üyeliği (50 TL/Yıl)</option>
-                  </select>
-                </div>
 
                 <div>
                   <label className="block text-gray-700 font-medium mb-2">
@@ -244,13 +192,7 @@ export default function UyeOlPage() {
                 </button>
               </form>
 
-              <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                <p className="text-blue-800 text-sm">
-                  📝 <strong>Not:</strong> Başvurunuz değerlendirildikten sonra 
-                  e-posta ile bilgilendirileceksiniz. Onay sonrası aidat ödeme 
-                  bilgileri gönderilecektir.
-                </p>
-              </div>
+            
             </div>
           </div>
         </div>
