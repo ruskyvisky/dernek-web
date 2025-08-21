@@ -178,7 +178,7 @@ export default function IletisimPage() {
                 <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
                   {/* Instagram */}
                   <a
-                    href="#"
+                    href="https://www.instagram.com/edirnecocukhaklaridernegi/"
                     className="flex items-center gap-3 p-4 bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 text-white rounded-xl shadow hover:opacity-90 transition-all"
                   >
                     <svg
@@ -194,7 +194,7 @@ export default function IletisimPage() {
 
                   {/* Facebook */}
                   <a
-                    href="#"
+                    href="https://www.facebook.com/p/Edirne-%C3%87ocuk-Haklar%C4%B1-Derne%C4%9Fi-100069103126208/"
                     className="flex items-center gap-3 p-4 bg-[#1877f2] text-white rounded-xl shadow hover:bg-[#166fe0] transition-all"
                   >
                     <svg

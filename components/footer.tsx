@@ -30,13 +30,13 @@ const Footer = () => {
             {/* Sosyal Medya */}
             <div className="flex gap-4">
               <a 
-                href="#" 
+                href="https://www.instagram.com/edirnecocukhaklaridernegi/" 
                 className="w-10 h-10 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300 shadow-lg"
               >
                 <FaInstagram className="text-white" />
               </a>
               <a 
-                href="#" 
+                href="https://www.facebook.com/p/Edirne-%C3%87ocuk-Haklar%C4%B1-Derne%C4%9Fi-100069103126208/" 
                 className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300 shadow-lg"
               >
                 <FaFacebookF className="text-white" />
