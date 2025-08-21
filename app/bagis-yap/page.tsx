@@ -40,7 +40,7 @@ export default function BagisYapPage() {
         {/* Banka Hesap Bilgileri */}
         <div>
           <div className="bg-white rounded-2xl shadow-xl p-8">
-            <h2 className="text-3xl font-bold text-gray-800 mb-6">
+            <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
               Banka Hesap Bilgileri
             </h2>
             <p className="text-gray-600 text-center mb-8">
